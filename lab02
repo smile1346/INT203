@@ -1,0 +1,39 @@
+<script setup>
+import { computed, ref } from 'vue'
+const newNote = ref('')
+const notes = ref([])
+const keywords = ref('')
+const filterNotes = computed(()=>{ return notes.value.filter((note) => note.toLowerCase().includes(keywords.value.toLocaleLowerCase()))})
+const addNote = () => {
+  notes.value.push(newNote.value)
+  console.log(notes.value);
+}
+</script>
+
+<template>
+<div>
+<div v-show="notes.length > 0">
+Filter Notes:
+<input type="text" v-model="keywords">
+<ul>
+  <li v-for="note in filterNotes">
+  {{ note }}
+  </li>
+</ul>
+</div>
+New Notes:
+<input type="text" v-model="newNote" />
+<button @click="addNote">Add Note</button>
+</div>
+</template>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
